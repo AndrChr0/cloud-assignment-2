@@ -1,4 +1,12 @@
-print("have you seen the internet historian?")
+from flask import Flask
 
+# Create a Flask app
+app = Flask(__name__)
 
-#  docker run --name mysql-root -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql
+# Decorator to define the route
+@app.route("/")
+def index():
+    return "Hello, World!"
+
+# Run the app
+app.run(host="0.0.0.0", port=80)
