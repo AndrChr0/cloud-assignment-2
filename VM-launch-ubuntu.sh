@@ -10,6 +10,6 @@ git clone https://github.com/AndrChr0/cloud-assignment-2.git
 # Change directory back to root
 cd /
 
-sudo apt-get update
-sudo apt-get install -y nano docker docker-compose # shit to install :)
+sudo apt update
+sudo apt install -y nano docker docker-compose # shit to install :)
 
