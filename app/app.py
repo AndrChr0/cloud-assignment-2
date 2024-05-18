@@ -14,7 +14,7 @@ def favorite_colors() -> List[Dict]:
         'password': 'root',
         'host': 'db',
         'port': '3306',
-        'database': 'knights'
+        'database': 'olansk'
     }
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
