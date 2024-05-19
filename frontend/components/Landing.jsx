@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Home = () => {
+const Landing = () => {
   const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
@@ -23,4 +23,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;

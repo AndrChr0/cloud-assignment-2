@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useReddit } from "../Context";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const { setIsLoggedIn } = useReddit();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +18,7 @@ const Login = () => {
         password,
       });
       setMessage(response.data.message);
+        setIsLoggedIn(true);
     } catch (error) {
       setMessage(error.response.data.error);
     }

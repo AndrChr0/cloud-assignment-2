@@ -20,6 +20,13 @@ CREATE TABLE `users` (
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `users` (`username`, `email`, `password`) VALUES
+('andreas', 'andreas@example.com', 'andreas'),
+('john_doe', 'john.doe@example.com', 'password123'),
+('jane_doe', 'jane.doe@example.com', 'password456'),
+('alex_smith', 'alex.smith@example.com', 'password789'),
+('emma_jones', 'emma.jones@example.com', 'password101');
+
 CREATE TABLE `posts` (
   `post_id` mediumint(255) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
@@ -45,13 +52,3 @@ CREATE TABLE `likes` (
   CONSTRAINT `liker` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE favorite_colors (
-  name VARCHAR(20),
-  color VARCHAR(10)
-);
-
-INSERT INTO favorite_colors
-  (name, color)
-VALUES
-  ('Lancelot', 'blue'),
-  ('Galahad', 'yellow');

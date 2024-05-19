@@ -1,17 +1,20 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "../components/Register";
 import Login from "../components/Login";
-import Home from "../components/Home";
+import Landing from "../components/Landing";
 import Nav from "../components/Nav";
+import FYP from "../components/FYP";
 
 function App() {
   return (
     <>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="/home" element={<FYP />} />
       </Routes>
     </>
   );
