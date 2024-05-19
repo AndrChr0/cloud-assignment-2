@@ -7,6 +7,7 @@ const Nav = () => {
   const logOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");
+    localStorage.removeItem("userID");
   };
 
   return (

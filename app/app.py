@@ -101,7 +101,7 @@ def get_posts():
 def get_posts_by_category(category_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    query = 'SELECT * FROM posts WHERE category_id = %s ORDER BY creation_date DESC'
+    query = 'SELECT * FROM posts WHERE category_id = %s ORDER BY creation_date ASC'
     cursor.execute(query, (category_id,))  # Fetching posts for the specified category from the database
     posts = cursor.fetchall()
     cursor.close()
@@ -129,6 +129,59 @@ def get_categories():
         'description': category[2],
         'creation_date': category[3]
     } for category in categories])  # Returning the categories as JSON
+
+@app.route('/posts', methods=['POST'])
+def create_post():
+    data = request.json
+    title = data.get('title')
+    content = data.get('content')
+    category_id = data.get('category_id')
+    user_id = data.get('user_id')
+
+    if not title or not content or not category_id:
+        return jsonify({'error': 'Title, content, and category are required'}), 400
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            'INSERT INTO posts (title, content, user_id, category_id, creation_date) VALUES (%s, %s, %s, %s, NOW())',
+            (title, content, user_id, category_id)
+        )
+        connection.commit()
+    except mysql.connector.Error as err:
+        return jsonify({'error': str(err)}), 400
+    finally:
+        cursor.close()
+        connection.close()
+
+    return jsonify({'message': 'Post created successfully'})
+
+@app.route('/categories', methods=['POST'])
+def create_category():
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
+
+    if not name or not description:
+        return jsonify({'error': 'Name and description are required'}), 400
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            'INSERT INTO categories (name, description, creation_date) VALUES (%s, %s, NOW())',
+            (name, description)
+        )
+        connection.commit()
+    except mysql.connector.Error as err:
+        return jsonify({'error': str(err)}), 400
+    finally:
+        cursor.close()
+        connection.close()
+
+    return jsonify({'message': 'Category created successfully'})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')  # Running the Flask application on the specified host

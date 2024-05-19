@@ -5,6 +5,8 @@ import Landing from "../components/Landing";
 import Nav from "../components/Nav";
 import FYP from "../components/FYP";
 import CategoryPage from "../components/CategoryPage";
+import NewPost from "../components/NewPost";
+import NewCategory from "../components/NewCategory";
 
 function App() {
   return (
@@ -17,7 +19,8 @@ function App() {
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/home" element={<FYP />} />
         <Route path="/category/:category_id" element={<CategoryPage/>} />
-        
+        <Route path="/new-post" element={<NewPost />} />
+        <Route path="/new-category" element={<NewCategory />} />
       </Routes>
     </>
   );
