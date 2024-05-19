@@ -1,15 +1,13 @@
-from flask import Flask, json, request, jsonify  # Importing Flask and related modules
-from flask_cors import CORS  # Importing CORS for handling cross-origin requests
-import mysql.connector  # Importing MySQL connector for database operations
-import hashlib  # Importing hashlib for hashing passwords
+from flask_cors import CORS
+import hashlib
 
-# Initialize the Flask application
-app = Flask(__name__)
-CORS(app)  # Enable Cross-Origin Resource Sharing (CORS) for the app
+from flask import Flask, request, jsonify  # Importing necessary modules
+import mysql.connector
 
-# Function to establish a connection to the database
-def get_db_connection():
-    # Configuration for connecting to the MySQL database
+app = Flask(__name__)  # Creating a Flask application
+CORS(app)  # Allowing Cross-Origin Resource Sharing (CORS)
+
+def get_db_connection():  # Function to establish a database connection
     config = {
         'user': 'root',
         'password': 'root',
@@ -17,98 +15,120 @@ def get_db_connection():
         'port': '3306',
         'database': 'cloud_reddit_db'
     }
-    # Return a new MySQL connection using the provided configuration
     return mysql.connector.connect(**config)
 
-# Function to retrieve the count of users in the database
-def get_user_count() -> int:
-    connection = get_db_connection()  # Establish database connection
-    cursor = connection.cursor()  # Create a cursor object
-    cursor.execute('SELECT COUNT(*) FROM users')  # Execute SQL query to count users
-    user_count = cursor.fetchone()[0]  # Fetch the count from the result
-    cursor.close()  # Close the cursor
-    connection.close()  # Close the database connection
-    return user_count  # Return the count of users
+def get_user_count() -> int:  # Function to get the count of users in the database
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute('SELECT COUNT(*) FROM users')
+    user_count = cursor.fetchone()[0]
+    cursor.close()
+    connection.close()
+    return user_count
 
-# Define the route for the home page
-@app.route('/')
+@app.route('/')  # Route for the home page
 def index() -> str:
-    # Return the user count as a JSON response
-    return json.dumps({'user_count': get_user_count()})
+    return jsonify({'user_count': get_user_count()})  # Returning the user count as JSON
 
-# Define the route for user registration
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['POST'])  # Route for user registration
 def register():
-    data = request.json  # Get the JSON data from the request
-    username = data.get('username')  # Extract the username
-    email = data.get('email')  # Extract the email
-    password = data.get('password')  # Extract the password
+    data = request.json  # Getting the JSON data from the request
+    username = data.get('username')  # Extracting username from the data
+    email = data.get('email')  # Extracting email from the data
+    password = data.get('password')  # Extracting password from the data
 
-    # Check if all required fields are provided
-    if not username or not email or not password:
-        return jsonify({'error': 'Username, email, and password are required'}), 400
+    if not username or not email or not password:  # Checking if all required fields are present
+        return jsonify({'error': 'Username, email, and password are required'}), 400  # Returning an error message if any field is missing
 
-    # Hash the password using SHA-256
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()  # Hashing the password
 
-    connection = get_db_connection()  # Establish database connection
-    cursor = connection.cursor()  # Create a cursor object
+    connection = get_db_connection()
+    cursor = connection.cursor()
     try:
-        # Insert the new user into the users table
-        cursor.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)', (username, email, hashed_password))
-        connection.commit()  # Commit the transaction
-    except mysql.connector.IntegrityError as err:
-        # Return an error response if there's an integrity error (e.g., duplicate username or email)
-        return jsonify({'error': str(err)}), 400
+        cursor.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)', (username, email, hashed_password))  # Inserting the user data into the database
+        connection.commit()
+    except mysql.connector.IntegrityError as err:  # Handling integrity errors (e.g., duplicate username)
+        return jsonify({'error': str(err)}), 400  # Returning an error message
     finally:
-        cursor.close()  # Close the cursor
-        connection.close()  # Close the database connection
+        cursor.close()
+        connection.close()
 
-    # Return a success message
-    return jsonify({'message': 'User registered successfully'})
+    return jsonify({'message': 'User registered successfully'})  # Returning a success message
 
-# Define the route for user login
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])  # Route for user login
 def login():
-    data = request.json  # Get the JSON data from the request
-    username = data.get('username')  # Extract the username
-    password = data.get('password')  # Extract the password
+    data = request.json  # Getting the JSON data from the request
+    username = data.get('username')  # Extracting username from the data
+    password = data.get('password')  # Extracting password from the data
 
-    # Check if both username and password are provided
-    if not username or not password:
-        return jsonify({'error': 'Username and password are required'}), 400
+    if not username or not password:  # Checking if both username and password are present
+        return jsonify({'error': 'Username and password are required'}), 400  # Returning an error message if any field is missing
 
-    # Hash the password using SHA-256
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    
-    connection = get_db_connection()  # Establish database connection
-    cursor = connection.cursor()  # Create a cursor object
-    # SQL query to find the user with the given username and hashed password
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()  # Hashing the password
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
     query = 'SELECT * FROM users WHERE username = %(username)s AND password = %(hashed_password)s'
-    params = {'username': username, 'hashed_password': hashed_password}  # Parameters for the query
-    cursor.execute(query, params)  # Execute the query with parameters
-    user = cursor.fetchone()  # Fetch the user from the result
-    cursor.close()  # Close the cursor
-    connection.close()  # Close the database connection
+    params = {'username': username, 'hashed_password': hashed_password}
+    cursor.execute(query, params)  # Executing the query to check if the user exists
+    user = cursor.fetchone()
+    cursor.close()
+    connection.close()
 
-    if user:
-        # Return a success message with user details if the user is found
-        return jsonify({'message': 'Login successful', 'user_id': user[0], 'username': user[1]})
+    if user:  # If user exists
+        return jsonify({'message': 'Login successful', 'user_id': user[0], 'username': user[1]})  # Returning a success message with user details
     else:
-        # Return an error message if the username or password is incorrect
-        return jsonify({'error': 'Invalid username or password'}), 401
+        return jsonify({'error': 'Invalid username or password'}), 401  # Returning an error message if user does not exist or password is incorrect
 
-# Define the route for retrieving posts
-@app.route('/posts', methods=['GET'])
+@app.route('/posts', methods=['GET'])  # Route to get all posts
 def get_posts():
-    connection = get_db_connection()  # Establish database connection
-    cursor = connection.cursor()  # Create a cursor object
-    cursor.execute('SELECT * FROM posts')  # Execute SQL query to retrieve posts
-    posts = cursor.fetchall()  # Fetch all posts from the result
-    cursor.close()  # Close the cursor
-    connection.close()  # Close the database connection
-    return jsonify(posts)  # Return the posts as a JSON response
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM posts')  # Fetching all posts from the database
+    posts = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return jsonify([{
+        'post_id': post[0],
+        'title': post[1],
+        'content': post[2],
+        'user_id': post[3],
+        'category_id': post[4],
+        'creation_date': post[5]
+    } for post in posts])  # Returning the posts as JSON
 
-# Run the Flask app
+@app.route('/categories/<int:category_id>/posts', methods=['GET'])  # Route to get posts by category
+def get_posts_by_category(category_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    query = 'SELECT * FROM posts WHERE category_id = %s ORDER BY creation_date DESC'
+    cursor.execute(query, (category_id,))  # Fetching posts for the specified category from the database
+    posts = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return jsonify([{
+        'post_id': post[0],
+        'title': post[1],
+        'content': post[2],
+        'user_id': post[3],
+        'category_id': post[4],
+        'creation_date': post[5]
+    } for post in posts])  # Returning the posts as JSON
+
+@app.route('/categories', methods=['GET'])  # Route to get all categories
+def get_categories():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM categories')  # Fetching all categories from the database
+    categories = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return jsonify([{
+        'category_id': category[0],
+        'name': category[1],
+        'description': category[2],
+        'creation_date': category[3]
+    } for category in categories])  # Returning the categories as JSON
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0')  # Running the Flask application on the specified host

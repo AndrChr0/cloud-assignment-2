@@ -2,11 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useReddit } from "../Context";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const { setIsLoggedIn } = useReddit();
 
@@ -18,7 +21,8 @@ const Login = () => {
         password,
       });
       setMessage(response.data.message);
-        setIsLoggedIn(true);
+      setIsLoggedIn(true);
+      navigate("/home");
     } catch (error) {
       setMessage(error.response.data.error);
     }
