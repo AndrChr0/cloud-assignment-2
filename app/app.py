@@ -98,6 +98,17 @@ def login():
         # Return an error message if the username or password is incorrect
         return jsonify({'error': 'Invalid username or password'}), 401
 
+# Define the route for retrieving posts
+@app.route('/posts', methods=['GET'])
+def get_posts():
+    connection = get_db_connection()  # Establish database connection
+    cursor = connection.cursor()  # Create a cursor object
+    cursor.execute('SELECT * FROM posts')  # Execute SQL query to retrieve posts
+    posts = cursor.fetchall()  # Fetch all posts from the result
+    cursor.close()  # Close the cursor
+    connection.close()  # Close the database connection
+    return jsonify(posts)  # Return the posts as a JSON response
+
 # Run the Flask app
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
