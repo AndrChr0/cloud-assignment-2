@@ -13,6 +13,10 @@ const Login = () => {
 
   const { setIsLoggedIn } = useReddit();
 
+  const adUserToLocalStorage = (username) => {
+    localStorage.setItem("user", username);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,6 +24,7 @@ const Login = () => {
         username,
         password,
       });
+      adUserToLocalStorage(username);
       setMessage(response.data.message);
       setIsLoggedIn(true);
       navigate("/home");

@@ -6,17 +6,35 @@ const Nav = () => {
 
   const logOut = () => {
     setIsLoggedIn(false);
-  }
+    localStorage.removeItem("user");
+  };
 
   return (
     <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          {isLoggedIn ? (
+            <Link to="/home">Home</Link>
+          ) : (
+            <Link to="/">Home</Link>
+          )}
         </li>
+
+        {isLoggedIn && (
+          <>
+          <li>
+            <Link to="/new-post">New Post</Link>
+          </li>
+           <li>
+           <Link to="/new-category">New Category</Link>
+         </li>
+         </>
+        )}
         <li>
           {isLoggedIn ? (
-            <Link onClick={logOut} to="/">Log out</Link>
+            <Link onClick={logOut} to="/">
+              Log out
+            </Link>
           ) : (
             <Link to="/login">Log in</Link>
           )}
