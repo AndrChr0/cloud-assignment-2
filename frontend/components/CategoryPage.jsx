@@ -31,6 +31,21 @@ const CategoryPage = () => {
     fetchCategoryName();
   }, [category_id]);
 
+  const handleLike = async (postId) => {
+    try {
+      const userId = Number(localStorage.getItem("userID"));
+      const response = await axios.post(`http://localhost:5000/posts/${postId}/like`, { user_id: userId });
+      console.log(response.data);
+      
+      // Update the posts state to reflect the new like count
+      setPosts(posts.map(post =>
+        post.post_id === postId ? { ...post, likes: post.likes + 1 } : post
+      ));
+    } catch (error) {
+      console.error('Error liking post:', error);
+    }
+  };
+
   return (
     <div>
       <h1>Posts in {categoryName}</h1>
@@ -40,6 +55,8 @@ const CategoryPage = () => {
             <h2>{post.title}</h2>
             <p>{post.content}</p>
             <small>{new Date(post.creation_date).toLocaleString()}</small>
+            <p>Likes: {post.likes}</p>
+            <button onClick={() => handleLike(post.post_id)}>Like</button>
           </div>
         ))
       ) : (

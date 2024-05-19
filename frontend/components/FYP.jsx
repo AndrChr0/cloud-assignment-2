@@ -9,8 +9,12 @@ const FYP = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/posts");
-        setPosts(response.data);
-        console.log(response.data);
+        const postsData = response.data.map(post => ({
+          ...post,
+          likes: post.likes || 0  // Ensure likes is initialized to 0 if undefined
+        }));
+        setPosts(postsData);
+        console.log(postsData);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -19,17 +23,34 @@ const FYP = () => {
     fetchPosts();
   }, []);
 
+  const handleLike = async (postId) => {
+    try {
+      const userId = Number(localStorage.getItem("userID"));
+      const response = await axios.post(`http://localhost:5000/posts/${postId}/like`, { user_id: userId });
+      console.log(response.data);
+      
+      // Update the posts state to reflect the new like count
+      setPosts(posts.map(post =>
+        post.post_id === postId ? { ...post, likes: post.likes + 1 } : post
+      ));
+    } catch (error) {
+      console.error('Error liking post:', error);
+    }
+  };
+
   return (
     <div>
       <h1>Home</h1>
       <CategoryList />
 
       {posts.length > 0 ? (
-        posts.map((post) => (
-          <div key={post.creation_date}>
+        posts.map(post => (
+          <div key={post.post_id}>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
             <small>{new Date(post.creation_date).toLocaleString()}</small>
+            <p>Likes: {post.likes}</p>
+            <button onClick={() => handleLike(post.post_id)}>Like</button>
           </div>
         ))
       ) : (

@@ -1,6 +1,5 @@
 from flask_cors import CORS
 import hashlib
-
 from flask import Flask, request, jsonify  # Importing necessary modules
 import mysql.connector
 
@@ -80,11 +79,18 @@ def login():
     else:
         return jsonify({'error': 'Invalid username or password'}), 401  # Returning an error message if user does not exist or password is incorrect
 
-@app.route('/posts', methods=['GET'])  # Route to get all posts
+@app.route('/posts', methods=['GET'])
 def get_posts():
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM posts')  # Fetching all posts from the database
+    query = '''
+        SELECT p.post_id, p.title, p.content, p.user_id, p.category_id, p.creation_date, COALESCE(COUNT(l.like_id), 0) as likes
+        FROM posts p
+        LEFT JOIN likes l ON p.post_id = l.post_id
+        GROUP BY p.post_id
+        ORDER BY p.creation_date ASC
+    '''
+    cursor.execute(query)
     posts = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -94,15 +100,49 @@ def get_posts():
         'content': post[2],
         'user_id': post[3],
         'category_id': post[4],
-        'creation_date': post[5]
-    } for post in posts])  # Returning the posts as JSON
+        'creation_date': post[5],
+        'likes': post[6]
+    } for post in posts])
 
-@app.route('/categories/<int:category_id>/posts', methods=['GET'])  # Route to get posts by category
+
+# @app.route('/categories/<int:category_id>/posts', methods=['GET'])  # Route to get posts by category
+# def get_posts_by_category(category_id):
+#     connection = get_db_connection()
+#     cursor = connection.cursor()
+#     query = '''
+#         SELECT p.post_id, p.title, p.content, p.user_id, p.category_id, p.creation_date, COUNT(l.like_id) as likes
+#         FROM posts p
+#         LEFT JOIN likes l ON p.post_id = l.post_id
+#         WHERE p.category_id = %s
+#         GROUP BY p.post_id
+#         ORDER BY p.creation_date ASC
+#     '''
+#     cursor.execute(query, (category_id,))
+#     posts = cursor.fetchall()
+#     cursor.close()
+#     connection.close()
+#     return jsonify([{
+#         'post_id': post[0],
+#         'title': post[1],
+#         'content': post[2],
+#         'user_id': post[3],
+#         'category_id': post[4],
+#         'creation_date': post[5],
+#         'likes': post[6]
+#     } for post in posts])
+@app.route('/categories/<int:category_id>/posts', methods=['GET'])
 def get_posts_by_category(category_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    query = 'SELECT * FROM posts WHERE category_id = %s ORDER BY creation_date ASC'
-    cursor.execute(query, (category_id,))  # Fetching posts for the specified category from the database
+    query = '''
+        SELECT p.post_id, p.title, p.content, p.user_id, p.category_id, p.creation_date, COALESCE(COUNT(l.like_id), 0) as likes
+        FROM posts p
+        LEFT JOIN likes l ON p.post_id = l.post_id
+        WHERE p.category_id = %s
+        GROUP BY p.post_id
+        ORDER BY p.creation_date ASC
+    '''
+    cursor.execute(query, (category_id,))
     posts = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -112,8 +152,13 @@ def get_posts_by_category(category_id):
         'content': post[2],
         'user_id': post[3],
         'category_id': post[4],
-        'creation_date': post[5]
-    } for post in posts])  # Returning the posts as JSON
+        'creation_date': post[5],
+        'likes': post[6]
+    } for post in posts])
+
+
+
+
 
 @app.route('/categories', methods=['GET'])  # Route to get all categories
 def get_categories():
@@ -182,6 +227,23 @@ def create_category():
 
     return jsonify({'message': 'Category created successfully'})
 
+@app.route('/posts/<int:post_id>/like', methods=['POST'])
+def like_post(post_id):
+    data = request.json
+    user_id = data.get('user_id')
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute('INSERT INTO likes (user_id, post_id) VALUES (%s, %s)', (user_id, post_id))
+        connection.commit()
+    except mysql.connector.Error as err:
+        return jsonify({'error': str(err)}), 400
+    finally:
+        cursor.close()
+        connection.close()
+
+    return jsonify({'message': 'Post liked successfully'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')  # Running the Flask application on the specified host
