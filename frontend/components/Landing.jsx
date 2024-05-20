@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 
 const Landing = () => {
   const [userCount, setUserCount] = useState(0);
+  const api = import.meta.env.VITE_URL;
 
   useEffect(() => {
     axios
-      .get("/api/")
+      .get(`${api}/`)
       .then((response) => {
         setUserCount(response.data.user_count);
       })

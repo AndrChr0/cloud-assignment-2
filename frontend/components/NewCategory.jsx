@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const NewCategory = () => {
+  const api = import.meta.env.VITE_URL;
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
@@ -9,7 +11,7 @@ const NewCategory = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/api/categories', {
+      const response = await axios.post(`${api}/categories`, {
         name,
         description
       });

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useReddit } from '../Context';
 
 const Profile = () => {
+  const api = import.meta.env.VITE_URL;
+
     const [userDetails, setUserDetails] = useState(null);
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate();
@@ -12,7 +14,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (userID) {
-            axios.get(`/api/users/${userID}`)
+            axios.get(`${api}/users/${userID}`)
                 .then(response => {
                     setUserDetails(response.data);
                 })
@@ -29,7 +31,7 @@ const Profile = () => {
         }
 
 
-        axios.delete(`/api/users/${userID}`)
+        axios.delete(`${api}/users/${userID}`)
             .then(response => {
                 console.log(response.data.message);
                 localStorage.removeItem("userID");
