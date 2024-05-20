@@ -49,7 +49,6 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
-        <br />
         <label>
           Password:
           <input
@@ -59,7 +58,6 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <br />
         <button type="submit">Submit</button>
       </form>
       {message && <p>{message}</p>}

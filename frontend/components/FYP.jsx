@@ -47,7 +47,7 @@ const FYP = () => {
 
       {posts.length > 0 ? (
         posts.map(post => (
-          <div key={post.post_id}>
+          <div className="post" key={post.post_id}>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
             <small>{new Date(post.creation_date).toLocaleString()}</small>

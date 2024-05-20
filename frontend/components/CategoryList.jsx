@@ -31,7 +31,7 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div>
+    <div className='categorys'>
       <h2>Categories</h2>
       <ul>
         {categories.map(category => (

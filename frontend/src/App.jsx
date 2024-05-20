@@ -8,11 +8,13 @@ import CategoryPage from "../components/CategoryPage";
 import NewPost from "../components/NewPost";
 import NewCategory from "../components/NewCategory";
 import Profile from "../components/Profile";
+import './App.css'
 
 function App() {
   return (
     <>
       <Nav />
+      <main>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
@@ -24,6 +26,7 @@ function App() {
         <Route path="/new-category" element={<NewCategory />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+      </main>
     </>
   );
 }

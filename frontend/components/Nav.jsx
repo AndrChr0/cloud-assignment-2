@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useReddit } from "../Context";
 
+
+
 const Nav = () => {
   const { isLoggedIn, setIsLoggedIn } = useReddit();
 

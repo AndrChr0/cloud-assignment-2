@@ -52,7 +52,6 @@ const Profile = () => {
     return (
         <div>
             <h1>Profile</h1>
-            <p>ID: {userDetails.user_id}</p>
             <p>Username: {userDetails.username}</p>
             <p>Email: {userDetails.email}</p>
             <button onClick={handleDelete}>Delete User</button>
