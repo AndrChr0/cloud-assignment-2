@@ -239,5 +239,25 @@ def get_user(user_id):
     else:
         return jsonify({'error': 'User not found'}), 404
 
+
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute('DELETE FROM users WHERE user_id = %s', (user_id,))
+        connection.commit()
+        if cursor.rowcount == 0:
+            return jsonify({'error': 'User not found'}), 404
+    except mysql.connector.Error as err:
+        return jsonify({'error': str(err)}), 400
+    finally:
+        cursor.close()
+        connection.close()
+
+    return jsonify({'message': 'User deleted successfully'})
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')  # Running the Flask application on the specified host
