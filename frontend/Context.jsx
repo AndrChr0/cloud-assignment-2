@@ -23,6 +23,7 @@ export const ContextProvider = ({ children }) => {
   }, []);
 
   return (
+    // global variables for user and login status
     <Context.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn }}>
       {children}
     </Context.Provider>

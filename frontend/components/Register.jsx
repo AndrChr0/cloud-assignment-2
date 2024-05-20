@@ -9,16 +9,17 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Send a POST request to the registration endpoint with the user data
       const response = await axios.post(`${api}/register`, {
         username,
         email,
         password,
       });
-      console.log(response.data);
+      // Redirect to the login page after successful registration
       navigate("/login");
     } catch (error) {
       console.error(error);

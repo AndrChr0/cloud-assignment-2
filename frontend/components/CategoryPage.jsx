@@ -10,6 +10,7 @@ const CategoryPage = () => {
   const [categoryName, setCategoryName] = useState('');
 
   useEffect(() => {
+    // Fetch posts for the selected category
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${api}/categories/${category_id}/posts`);
@@ -19,6 +20,7 @@ const CategoryPage = () => {
       }
     };
 
+    // Fetch the name of the selected category
     const fetchCategoryName = async () => {
       try {
         const response = await axios.get(`${api}/categories`);
@@ -29,6 +31,7 @@ const CategoryPage = () => {
       }
     };
 
+    // Call the fetch functions when the category_id changes
     fetchPosts();
     fetchCategoryName();
   }, [category_id]);
@@ -37,7 +40,6 @@ const CategoryPage = () => {
     try {
       const userId = Number(localStorage.getItem("userID"));
       const response = await axios.post(`${api}/posts/${postId}/like`, { user_id: userId });
-      console.log(response.data);
       
       // Update the posts state to reflect the new like count
       setPosts(posts.map(post =>

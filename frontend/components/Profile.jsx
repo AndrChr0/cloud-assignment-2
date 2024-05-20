@@ -35,9 +35,9 @@ const Profile = () => {
             .then(response => {
                 console.log(response.data.message);
                 localStorage.removeItem("userID");
-                setUserDetails(null); // Clear user details on successful deletion
-                setIsLoggedIn(false); // Log out the user on successful deletion
-                setUser(null); // Clear user details from context on successful deletion
+                setUserDetails(null); 
+                setIsLoggedIn(false); 
+                setUser(null); 
                 navigate("/");
             })
             .catch(error => {

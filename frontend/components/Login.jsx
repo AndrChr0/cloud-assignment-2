@@ -15,23 +15,31 @@ const Login = () => {
 
   const { setIsLoggedIn } = useReddit();
 
+  // Function to add user information to local storage
   const adUserToLocalStorage = (username, id) => {
     localStorage.setItem("user", username);
     localStorage.setItem("userID", id);
   }
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Send a POST request to the login endpoint with the username and password
       const response = await axios.post(`${api}/login`, {
         username,
         password,
       });
+      // Add the user information to local storage
       adUserToLocalStorage(username, response.data.user_id);
+      // Set the message state with the response message
       setMessage(response.data.message);
+      // Set the isLoggedIn state to true
       setIsLoggedIn(true);
+      // Navigate to the home page
       navigate("/home");
     } catch (error) {
+      // Set the message state with the error message from the response
       setMessage(error.response.data.error);
     }
   };
@@ -58,7 +66,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit">Log in</button>
       </form>
       {message && <p>{message}</p>}
       <p>

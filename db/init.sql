@@ -52,12 +52,12 @@ INSERT INTO `posts` (`title`, `content`, `user_id`, `category_id`, `creation_dat
 ('I am a mean boi', 'I am a mean boi', 1, 1, '2024-05-05 10:00:00'),
 ('Learn the Way', 'The only way to pump is the BissePump way!', 2, 2, '2024-05-06 12:00:00'),
 ('Top Dank Memes', 'Check out these top dank memes of the week.', 3, 3, '2024-05-06 13:00:00'),
-('Programming Tips', 'Best practices for writing clean code.', 4, 4, '2024-05-07 14:00:00'),
-('Gaming Highlights', 'Top highlights from this week in gaming.', 5, 5, '2024-05-07 15:00:00'),
+('Programming Tips', 'Best practices for writing programmer code like a probro', 4, 4, '2024-05-07 14:00:00'),
+('Gaming Highlights', 'Top highlights from this week in gaming...', 5, 5, '2024-05-07 15:00:00'),
 ('BissePump 101', 'Introduction to BissePump training.', 2, 2, '2024-05-08 16:00:00'),
-('Meme Review', 'Reviewing the latest memes.', 3, 3, '2024-05-08 17:00:00'),
-('Code Review', 'How to do a proper code review.', 4, 4, '2024-05-08 18:00:00'),
-('Latest Games', 'Upcoming game releases to watch.', 5, 5, '2024-05-09 19:00:00');
+('Meme Review', 'Reviewing the latest dank memes.', 3, 3, '2024-05-08 17:00:00'),
+('Code Review', 'How to do a proper code, <whaat?>', 4, 4, '2024-05-08 18:00:00'),
+('Crazy game', 'Have you played that one game??', 5, 5, '2024-05-09 19:00:00');
 
 CREATE TABLE `likes` (
   `like_id` mediumint unsigned NOT NULL AUTO_INCREMENT,

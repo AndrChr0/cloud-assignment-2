@@ -22,6 +22,7 @@ const Landing = () => {
       <h1>Welcome to fake reddit</h1>
         <p>Your place for posting posts and liking them. </p>
         <Link to="/register">Register here</Link>
+        <p>There are currently {userCount} users on the platform.</p>
     </div>
   );
 };

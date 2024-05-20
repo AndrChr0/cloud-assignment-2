@@ -11,14 +11,18 @@ const NewCategory = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Send a POST request to the API endpoint with the category data
       const response = await axios.post(`${api}/categories`, {
         name,
         description
       });
+      // Update the message state with the response data
       setMessage(response.data.message);
+      // Reset the name and description states
       setName('');
       setDescription('');
     } catch (error) {
+      // Handle errors by setting an error message
       setMessage('Error creating category');
       console.error('Error creating category:', error);
     }

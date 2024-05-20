@@ -8,28 +8,32 @@ const FYP = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    // Fetch posts from the API
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${api}/posts`);
+        // Initialize likes to 0 if undefined
         const postsData = response.data.map(post => ({
           ...post,
-          likes: post.likes || 0  // Ensure likes is initialized to 0 if undefined
+          likes: post.likes || 0
         }));
+        // Update the posts state
         setPosts(postsData);
-        console.log(postsData);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
 
+    // Call the fetchPosts function when the component mounts
     fetchPosts();
   }, []);
 
+  // Handle the like button click
   const handleLike = async (postId) => {
     try {
       const userId = Number(localStorage.getItem("userID"));
+      // Send a POST request to like the post
       const response = await axios.post(`${api}/posts/${postId}/like`, { user_id: userId });
-      console.log(response.data);
       
       // Update the posts state to reflect the new like count
       setPosts(posts.map(post =>

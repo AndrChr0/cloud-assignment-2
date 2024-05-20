@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useReddit } from "../Context";
 
 
-
+// nav bar component
 const Nav = () => {
   const { isLoggedIn, setIsLoggedIn } = useReddit();
 

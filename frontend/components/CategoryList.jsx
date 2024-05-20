@@ -6,8 +6,7 @@ const CategoryList = () => {
 
   const api = import.meta.env.VITE_URL;
 
-
-
+  // Fetch categories from the API and update the state
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const CategoryList = () => {
           creation_date: category.creation_date
         }));
         setCategories(categoriesData);
-        console.log(categoriesData);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }

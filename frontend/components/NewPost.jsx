@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const NewPost = () => {
   const api = import.meta.env.VITE_URL;
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [category, setCategory] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
+  // Fetch categories from the API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`${api}/categories`);
         setCategories(response.data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
     };
 
     fetchCategories();
   }, []);
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-
 
     try {
       const response = await axios.post(`${api}/posts`, {
         title,
         content,
         category_id: category,
-        user_id: Number(localStorage.getItem("userID"))
+        user_id: Number(localStorage.getItem("userID")),
       });
       setMessage(response.data.message);
-      setTitle('');
-      setContent('');
-      setCategory('');
+      setTitle("");
+      setContent("");
+      setCategory("");
     } catch (error) {
-      setMessage('Error creating post');
-      console.error('Error creating post:', error);
+      setMessage("Error creating post");
+      console.error("Error creating post:", error);
     }
   };
 
