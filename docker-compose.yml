@@ -1,9 +1,7 @@
-# version: "2"
 services:
   app:
     build: ./app
-    links:
-      - db
+    container_name: app
     ports:
       - "5000:5000"
     depends_on:
@@ -11,16 +9,18 @@ services:
 
   db:
     image: mysql:5.7
+    container_name: db
     ports:
       - "32000:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
-  
+
   frontend:
     build: ./frontend
+    container_name: frontend
     ports:
       - "5173:5173"
     depends_on:
-      - app 
+      - app

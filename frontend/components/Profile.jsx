@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useReddit } from '../Context';
 
 const Profile = () => {
+  const api = import.meta.env.VITE_URL;
+
     const [userDetails, setUserDetails] = useState(null);
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate();

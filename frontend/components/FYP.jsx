@@ -3,6 +3,8 @@ import axios from "axios";
 import CategoryList from "./CategoryList";
 
 const FYP = () => {
+  const api = import.meta.env.VITE_URL;
+
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {

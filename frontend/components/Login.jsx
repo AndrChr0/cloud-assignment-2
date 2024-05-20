@@ -5,6 +5,8 @@ import { useReddit } from "../Context";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const api = import.meta.env.VITE_URL;
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
