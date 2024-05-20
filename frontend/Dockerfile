@@ -1,4 +1,5 @@
-FROM node:21 AS build
+# Dockerfile for React frontend
+FROM node:20
 
 WORKDIR /app
 
@@ -10,7 +11,9 @@ COPY . .
 
 RUN npm run build
 
-
-EXPOSE 8082
+EXPOSE 5173
 
 CMD ["npm", "run", "serve"]
+
+
+

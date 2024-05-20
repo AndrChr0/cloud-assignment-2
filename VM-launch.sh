@@ -5,7 +5,7 @@ sudo echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCTukhZ68AKs1G/xDaEqDUR1UvsDPIqW
 
 # Clone git repo
 cd /home/cc/ 
-git clone https://github.com/AndrChr0/cloud-assignment-2.git
+git clone https://github.com/AndrChr0/cloud-assignment-2/tree/cctest
 
 # Change directory back to root
 cd /
