@@ -12,7 +12,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (userID) {
-            axios.get(`/api/users/${userID}`)
+            axios.get(`${api}/users/${userID}`)
                 .then(response => {
                     setUserDetails(response.data);
                 })
@@ -29,7 +29,7 @@ const Profile = () => {
         }
 
 
-        axios.delete(`/api/users/${userID}`)
+        axios.delete(`${api}/users/${userID}`)
             .then(response => {
                 console.log(response.data.message);
                 localStorage.removeItem("userID");

@@ -8,7 +8,7 @@ const FYP = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("/api/posts");
+        const response = await axios.get(`${api}/posts`);
         const postsData = response.data.map(post => ({
           ...post,
           likes: post.likes || 0  // Ensure likes is initialized to 0 if undefined
@@ -26,7 +26,7 @@ const FYP = () => {
   const handleLike = async (postId) => {
     try {
       const userId = Number(localStorage.getItem("userID"));
-      const response = await axios.post(`/api/posts/${postId}/like`, { user_id: userId });
+      const response = await axios.post(`${api}/posts/${postId}/like`, { user_id: userId });
       console.log(response.data);
       
       // Update the posts state to reflect the new like count

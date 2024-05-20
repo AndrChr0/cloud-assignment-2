@@ -11,7 +11,7 @@ const NewPost = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('/api/categories');
+        const response = await axios.get(`${api}/categories`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -27,7 +27,7 @@ const NewPost = () => {
 
 
     try {
-      const response = await axios.post('/api/posts', {
+      const response = await axios.post(`${api}/posts`, {
         title,
         content,
         category_id: category,

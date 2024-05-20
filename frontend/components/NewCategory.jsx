@@ -9,7 +9,7 @@ const NewCategory = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/api/categories', {
+      const response = await axios.post(`${api}/categories`, {
         name,
         description
       });

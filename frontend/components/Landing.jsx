@@ -6,7 +6,7 @@ const Landing = () => {
 
   useEffect(() => {
     axios
-      .get("/api/")
+      .get(`${api}/`)
       .then((response) => {
         setUserCount(response.data.user_count);
       })

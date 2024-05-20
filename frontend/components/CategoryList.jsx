@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const CategoryList = () => {
+
+  const api = import.meta.env.VITE_URL;
+
+
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('/api/categories');
+        const response = await axios.get(`${api}/categories`);
         const categoriesData = response.data.map(category => ({
           category_id: category.category_id,
           name: category.name,
