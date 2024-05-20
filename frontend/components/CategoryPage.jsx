@@ -10,7 +10,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/categories/${category_id}/posts`);
+        const response = await axios.get(`http://app:5000/categories/${category_id}/posts`);
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -19,7 +19,7 @@ const CategoryPage = () => {
 
     const fetchCategoryName = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/categories');
+        const response = await axios.get('http://app:5000/categories');
         const category = response.data.find(cat => cat.category_id === parseInt(category_id));
         setCategoryName(category ? category.name : 'Unknown Category');
       } catch (error) {
@@ -34,7 +34,7 @@ const CategoryPage = () => {
   const handleLike = async (postId) => {
     try {
       const userId = Number(localStorage.getItem("userID"));
-      const response = await axios.post(`http://localhost:5000/posts/${postId}/like`, { user_id: userId });
+      const response = await axios.post(`http://app:5000/posts/${postId}/like`, { user_id: userId });
       console.log(response.data);
       
       // Update the posts state to reflect the new like count

@@ -6,7 +6,7 @@ const Landing = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/")
+      .get("http://app:5000/")
       .then((response) => {
         setUserCount(response.data.user_count);
       })

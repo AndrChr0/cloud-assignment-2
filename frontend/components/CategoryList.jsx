@@ -8,7 +8,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/categories');
+        const response = await axios.get('http://app:5000/categories');
         const categoriesData = response.data.map(category => ({
           category_id: category.category_id,
           name: category.name,
