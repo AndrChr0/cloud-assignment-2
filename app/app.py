@@ -221,5 +221,23 @@ def like_post(post_id):
 
     return jsonify({'message': 'Post liked successfully'})
 
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute('SELECT user_id, username, email FROM users WHERE user_id = %s', (user_id,))
+    user = cursor.fetchone()
+    cursor.close()
+    connection.close()
+
+    if user:
+        return jsonify({
+            'user_id': user[0],
+            'username': user[1],
+            'email': user[2]
+        })
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')  # Running the Flask application on the specified host

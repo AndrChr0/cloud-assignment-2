@@ -14,22 +14,21 @@ const Nav = () => {
     <nav>
       <ul>
         <li>
-          {isLoggedIn ? (
-            <Link to="/home">Home</Link>
-          ) : (
-            <Link to="/">Home</Link>
-          )}
+          {isLoggedIn ? <Link to="/home">Home</Link> : <Link to="/">Home</Link>}
         </li>
 
         {isLoggedIn && (
           <>
-          <li>
-            <Link to="/new-post">New Post</Link>
-          </li>
-           <li>
-           <Link to="/new-category">New Category</Link>
-         </li>
-         </>
+            <li>
+              <Link to="/new-post">New Post</Link>
+            </li>
+            <li>
+              <Link to="/new-category">New Category</Link>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+          </>
         )}
         <li>
           {isLoggedIn ? (

@@ -7,6 +7,7 @@ import FYP from "../components/FYP";
 import CategoryPage from "../components/CategoryPage";
 import NewPost from "../components/NewPost";
 import NewCategory from "../components/NewCategory";
+import Profile from "../components/Profile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/category/:category_id" element={<CategoryPage/>} />
         <Route path="/new-post" element={<NewPost />} />
         <Route path="/new-category" element={<NewCategory />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
