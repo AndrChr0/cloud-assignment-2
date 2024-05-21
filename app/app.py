@@ -1,14 +1,15 @@
 from flask_cors import CORS
 import hashlib
-from flask import Flask, request, jsonify  
+from flask import Flask, request, jsonify
 import mysql.connector
 
-app = Flask(__name__)  
-#CORS config
-CORS(app)  
+app = Flask(__name__)
+# CORS config
+CORS(app)
+
 
 # Establish a database connection
-def get_db_connection():  
+def get_db_connection():
     config = {
         'user': 'root',
         'password': 'root',
@@ -20,7 +21,7 @@ def get_db_connection():
 
 
 # Function to get the count of users in the database
-def get_user_count() -> int:  
+def get_user_count() -> int:
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute('SELECT COUNT(*) FROM users')
@@ -31,14 +32,14 @@ def get_user_count() -> int:
 
 
 # Returning the user count
-@app.route('/')  
+@app.route('/')
 def index() -> str:
-    return jsonify({'user_count': get_user_count()})  
+    return jsonify({'user_count': get_user_count()})
 
 
-@app.route('/register', methods=['POST'])  
+@app.route('/register', methods=['POST'])
 def register():
-    data = request.json  
+    data = request.json
     username = data.get('username')  # Extracting username from the data
     email = data.get('email')  # Extracting email from the data
     password = data.get('password')  # Extracting password from the data
@@ -51,26 +52,27 @@ def register():
     connection = get_db_connection()
     cursor = connection.cursor()
     try:
-        cursor.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)', (username, email, hashed_password))  # Inserting the user data into the database
+        # Inserting the user data into the database
+        cursor.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)', (username, email, hashed_password))
         connection.commit()
     except mysql.connector.IntegrityError as err:  # Handling integrity errors (e.g., duplicate username)
-        return jsonify({'error': str(err)}), 400  
+        return jsonify({'error': str(err)}), 400
     finally:
         cursor.close()
         connection.close()
 
-    return jsonify({'message': 'User registered successfully'}) 
+    return jsonify({'message': 'User registered successfully'})
 
 
 # Login route
-@app.route('/login', methods=['POST'])  
+@app.route('/login', methods=['POST'])
 def login():
-    data = request.json  
+    data = request.json
     username = data.get('username')  # Extracting username from the data
     password = data.get('password')  # Extracting password from the data
 
     if not username or not password:  # Checking if both username and password are present
-        return jsonify({'error': 'Username and password are required'}), 400  
+        return jsonify({'error': 'Username and password are required'}), 400
 
     hashed_password = hashlib.sha256(password.encode()).hexdigest()  # Hashing the password
 
@@ -84,10 +86,10 @@ def login():
     connection.close()
 
     if user:  # check if user exists
-        return jsonify({'message': 'Login successful', 'user_id': user[0], 'username': user[1]})  
+        return jsonify({'message': 'Login successful', 'user_id': user[0], 'username': user[1]})
     else:
-        return jsonify({'error': 'Invalid username or password'}), 401  
-    
+        return jsonify({'error': 'Invalid username or password'}), 401
+
 
 @app.route('/posts', methods=['GET'])  # Route to get all posts
 def get_posts():
@@ -146,7 +148,7 @@ def get_posts_by_category(category_id):
 def get_categories():
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM categories') 
+    cursor.execute('SELECT * FROM categories')
     categories = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -160,21 +162,21 @@ def get_categories():
 
 @app.route('/posts', methods=['POST'])  # Route to create a new post
 def create_post():
-    data = request.json  
-    title = data.get('title')  
-    content = data.get('content')  
-    category_id = data.get('category_id')  
-    user_id = data.get('user_id')  
+    data = request.json
+    title = data.get('title')
+    content = data.get('content')
+    category_id = data.get('category_id')
+    user_id = data.get('user_id')
 
     if not title or not content or not category_id:  # Checking if all required fields are present
-        return jsonify({'error': 'Title, content, and category are required'}), 400  
+        return jsonify({'error': 'Title, content, and category are required'}), 400
 
     connection = get_db_connection()
     cursor = connection.cursor()
     try:
         cursor.execute(
             'INSERT INTO posts (title, content, user_id, category_id, creation_date) VALUES (%s, %s, %s, %s, NOW())',
-            (title, content, user_id, category_id) 
+            (title, content, user_id, category_id)
         )
         connection.commit()
     except mysql.connector.Error as err:  # Handling database errors
@@ -183,17 +185,17 @@ def create_post():
         cursor.close()
         connection.close()
 
-    return jsonify({'message': 'Post created successfully'})  
+    return jsonify({'message': 'Post created successfully'})
 
 
 @app.route('/categories', methods=['POST'])  # Route to create a new category
 def create_category():
-    data = request.json  
-    name = data.get('name')  
-    description = data.get('description')  
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
 
     if not name or not description:  # Checking if all required fields are present
-        return jsonify({'error': 'Name and description are required'}), 400  
+        return jsonify({'error': 'Name and description are required'}), 400
 
     connection = get_db_connection()
     cursor = connection.cursor()
@@ -203,32 +205,33 @@ def create_category():
             (name, description)  # Inserting the category data into the database
         )
         connection.commit()
-    except mysql.connector.Error as err:  
-        return jsonify({'error': str(err)}), 400  
+    except mysql.connector.Error as err:
+        return jsonify({'error': str(err)}), 400
     finally:
         cursor.close()
         connection.close()
 
-    return jsonify({'message': 'Category created successfully'})  
+    return jsonify({'message': 'Category created successfully'})
 
 
 @app.route('/posts/<int:post_id>/like', methods=['POST'])  # Route to like a post
 def like_post(post_id):
-    data = request.json  
-    user_id = data.get('user_id')  
+    data = request.json
+    user_id = data.get('user_id')
 
     connection = get_db_connection()
     cursor = connection.cursor()
     try:
-        cursor.execute('INSERT INTO likes (user_id, post_id) VALUES (%s, %s)', (user_id, post_id))  # Inserting the like data into the database
+        # Inserting the like data into the database
+        cursor.execute('INSERT INTO likes (user_id, post_id) VALUES (%s, %s)', (user_id, post_id))
         connection.commit()
     except mysql.connector.Error as err:  # Handling database errors
-        return jsonify({'error': str(err)}), 400  
+        return jsonify({'error': str(err)}), 400
     finally:
         cursor.close()
         connection.close()
 
-    return jsonify({'message': 'Post liked successfully'})  
+    return jsonify({'message': 'Post liked successfully'})
 
 
 @app.route('/users/<int:user_id>', methods=['GET'])  # Route to get a user by ID
@@ -245,9 +248,9 @@ def get_user(user_id):
             'user_id': user[0],
             'username': user[1],
             'email': user[2]
-        })  
+        })
     else:
-        return jsonify({'error': 'User not found'}), 404  
+        return jsonify({'error': 'User not found'}), 404
 
 
 @app.route('/users/<int:user_id>', methods=['DELETE'])
@@ -257,14 +260,14 @@ def delete_user(user_id):
     try:
         # Delete likes associated with the user
         cursor.execute('DELETE FROM likes WHERE user_id = %s', (user_id,))
-        
+
         # Delete posts associated with the user
         cursor.execute('DELETE FROM posts WHERE user_id = %s', (user_id,))
-        
+
         # Now delete the user
         cursor.execute('DELETE FROM users WHERE user_id = %s', (user_id,))
         connection.commit()
-        
+
         if cursor.rowcount == 0:  # If no rows were affected, user was not found
             return jsonify({'error': 'User not found'}), 404
     except mysql.connector.Error as err:
@@ -277,4 +280,4 @@ def delete_user(user_id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')  
+    app.run(host='0.0.0.0')
