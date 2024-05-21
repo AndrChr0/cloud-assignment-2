@@ -1,6 +1,6 @@
 from flask_cors import CORS
 import hashlib
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import mysql.connector
 
 app = Flask(__name__)
@@ -33,7 +33,7 @@ def get_user_count() -> int:
 
 # Returning the user count
 @app.route('/')
-def index() -> str:
+def index() -> Response:
     return jsonify({'user_count': get_user_count()})
 
 
