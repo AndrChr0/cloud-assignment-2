@@ -34,7 +34,7 @@ const CategoryList = () => {
       <ul>
         {categories.map(category => (
           <li key={category.category_id}>
-            <Link to={`/category/${category.category_id}`}>{category.name}</Link>
+            <Link to={`/category/${category.category_id}`}>fr/{category.name}</Link>
           </li>
         ))}
       </ul>
