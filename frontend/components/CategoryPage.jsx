@@ -65,7 +65,7 @@ const CategoryPage = () => {
   return (
     <>
       <div className="posts_in_category">
-        <div className="backbutton" > <FaArrowLeftLong onClick={()=>navigate('/home')} />Back</div>
+        <div className="backbutton" > <div onClick={()=>navigate('/home')}><FaArrowLeftLong /> <span>Back</span> </div></div>
         <div className="background"></div>
         <h1 className="name"> <span>fr/{categoryName}</span></h1>
       </div>
