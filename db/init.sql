@@ -35,12 +35,13 @@ INSERT INTO `users` (`username`, `email`, `password`) VALUES
 ('Christopher_Ngo', 'chrngo@example.com', 'ngoooo');
 
 CREATE TABLE `posts` (
-  `post_id` mediumint unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) NOT NULL,
-  `content` varchar(500) NOT NULL,
-  `user_id` smallint unsigned NOT NULL,
-  `category_id` tinyint unsigned NOT NULL,
-  `creation_date` datetime NOT NULL,
+  `post_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `content` VARCHAR(500) NOT NULL,
+  `user_id` SMALLINT UNSIGNED NOT NULL,
+  `category_id` TINYINT UNSIGNED NOT NULL,
+  `creation_date` DATETIME NOT NULL,
+  `likes` INT DEFAULT 0,
   PRIMARY KEY (`post_id`),
   KEY `poster_idx` (`user_id`),
   KEY `category_idx` (`category_id`),

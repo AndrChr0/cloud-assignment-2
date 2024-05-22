@@ -55,9 +55,13 @@ const CategoryPage = () => {
         user_id: userId,
       });
 
-      setPosts(posts.map((post) =>
-        post.post_id === postId ? { ...post, likes: post.likes + 1 } : post
-      ));
+      // Update the posts state to reflect the new like count immediately
+      setPosts(
+        posts.map((post) =>
+          post.post_id === postId ? { ...post, likes: post.likes + 1 } : post
+        )
+      );
+
     } catch (error) {
       console.error("Error liking post:", error);
     }
@@ -105,7 +109,7 @@ const CategoryPage = () => {
             );
           })
         ) : (
-          <p>Hello, there trendsetter!<br></br> Be the first one to post in fr/{categoryName}.</p>
+          <p>Hello, there trendsetter!<br /> Be the first one to post in fr/{categoryName}.</p>
         )}
       </div>
     </>
