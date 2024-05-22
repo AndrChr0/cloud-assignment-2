@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { GoPlus } from "react-icons/go";
 
 const CategoryList = () => {
   const api = import.meta.env.VITE_URL;
@@ -32,6 +33,8 @@ const CategoryList = () => {
     <div className="categorys">
       <h2>Categories</h2>
       <ul>
+
+      <li className="create" onClick={()=>navigate('/new-category')}><GoPlus /> Create new category</li>
         {categories.map((category) => (
           <li
             onClick={() => navigate(`/category/${category.category_id}`)}
@@ -40,6 +43,7 @@ const CategoryList = () => {
             fr/{category.name}
           </li>
         ))}
+         {/* <li className="create" onClick={()=>navigate('/new-category')}><GoPlus /> Create new category</li> */}
       </ul>
     </div>
   );

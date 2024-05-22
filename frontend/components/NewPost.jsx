@@ -50,25 +50,7 @@ const NewPost = () => {
       <h1>Create New Post</h1>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Content:</label>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Category:</label>
+      <div style={{width: '30%', marginBottom:'15px'}}>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -81,6 +63,24 @@ const NewPost = () => {
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            placeholder="Title"
+            className="title"
+          />
+        </div>
+        <div>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+            placeholder="Text"
+          />
         </div>
         <button type="submit">Create Post</button>
       </form>

@@ -82,7 +82,6 @@ const CategoryPage = () => {
 
               <h2 className="title">{post.title}</h2>
               <p className="content">{post.content}</p>
-              <small>{new Date(post.creation_date).toLocaleString()}</small>
 
               <div className="likes_container">
                 <button

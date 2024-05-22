@@ -50,7 +50,7 @@ const Profile = () => {
     }
 
     return (
-        <div>
+        <div className='posts_container create profile'>
             <h1>Profile</h1>
             <p>Username: {userDetails.username}</p>
             <p>Email: {userDetails.email}</p>

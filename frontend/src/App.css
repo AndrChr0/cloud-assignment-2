@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
+  /* outline: 1px solid red;s */
 }
 
 nav {
@@ -17,10 +18,12 @@ nav {
 
   && .homeNewPostAndCategory {
     display: flex;
+    align-items: center;
   }
 
   && .profileAndLog {
     display: flex;
+    align-items: center;
   }
   && ul {
     width: 100%;
@@ -40,6 +43,39 @@ nav {
           color: #212529;
         }
       }
+    }
+  }
+}
+
+.landingpage {
+  width: 100%;
+  height: 90vh;
+
+  && > div {
+    padding-top: 10vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    && > div h1 {
+      font-weight: 450;
+    }
+  }
+
+  && button {
+    padding: 4px 8px;
+    font-size: 13px;
+    font-weight: 300;
+    background-color: white;
+    color: rgb(255, 255, 255);
+    border: #007bff 1px solid;
+    background-color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.12s ease-in-out;
+
+    &&:hover {
+      scale: 1.05;
     }
   }
 }
@@ -72,6 +108,15 @@ nav {
   && li:hover {
     scale: 1.08;
   }
+
+  && .create {
+    border: #007bff 1px solid;
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
 }
 main {
   /* background-color: aquamarine; */
@@ -85,17 +130,39 @@ form {
   gap: 0.3em;
 }
 
+.posts_container.create {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  padding: 2em;
+  && input,
+  textarea {
+    padding: 4px 8px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+}
+
+.posts_container.create.profile {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    padding: 2em;
+
+    && button{
+      background-color: red;
+      border: red;
+    }
+}
 .posts_container.create form div {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.posts_container.create form{
+.posts_container.create form {
   width: 100%;
 }
 
-.posts_container.create button{
+.posts_container.create button {
   padding: 4px 8px;
   font-size: 13px;
   font-weight: 300;
@@ -107,7 +174,7 @@ form {
   cursor: pointer;
   transition: 0.12s ease-in-out;
 
-  &&:hover{
+  &&:hover {
     scale: 1.01;
     cursor: pointer;
   }
@@ -241,4 +308,59 @@ form {
 .backbutton > div:hover * {
   scale: 1.05;
   cursor: pointer;
+}
+
+/* Login */
+.login {
+  width: 35dvw;
+  height: 85dvh;
+  margin: 0 auto;
+  padding: 2em 5em;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+  && form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+  }
+
+  && form > div {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  && form input {
+    border-radius: 17px;
+    padding: 8px 16px;
+    height: 55px;
+    border: none;
+    background-color: whitesmoke;
+
+    &&::placeholder {
+      color: black;
+    }
+  }
+
+  && button {
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 300;
+    background-color: white;
+    color: rgb(255, 255, 255);
+    border: #007bff 1px solid;
+    background-color: #007bff;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: 0.12s ease-in-out;
+
+    &&:hover {
+      scale: 1.02;
+    }
+  }
 }

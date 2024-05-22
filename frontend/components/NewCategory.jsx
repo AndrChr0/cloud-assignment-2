@@ -34,20 +34,20 @@ const NewCategory = () => {
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            placeholder='Name'
           />
         </div>
         <div>
-          <label>Description:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            placeholder='Description'
           />
         </div>
         <button type="submit">Create Category</button>

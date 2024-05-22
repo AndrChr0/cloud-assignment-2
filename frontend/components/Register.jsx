@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const api = import.meta.env.VITE_URL;
@@ -28,28 +28,48 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register account</h1>
+    <div className="login">
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Sign up</button>
+        <div>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {/* {message && (
+            <p style={{ color: "red", fontSize: "11px", marginTop: "-15px" }}>
+              {message}
+            </p>
+          )} */}
+          <p style={{ fontSize: "15px" }}>
+            Already a Fake Redditor?{" "}
+            <Link
+              style={{ textDecoration: "none", color: "#648EFC" }}
+              to="/login"
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
+
+        <div>
+          <button type="submit">Register</button>
+        </div>
       </form>
     </div>
   );
