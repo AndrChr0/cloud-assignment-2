@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useReddit } from "../Context";
+import { FaHeart } from "react-icons/fa";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Profile = () => {
   const api = import.meta.env.VITE_URL;
@@ -28,7 +30,7 @@ const Profile = () => {
       axios
         .get(`${api}/users/${userId}/posts`)
         .then((response) => {
-          console.log("Posts response:", response.data); 
+          console.log("Posts response:", response.data);
           setUserPosts(response.data);
         })
         .catch((error) => {
@@ -82,32 +84,55 @@ const Profile = () => {
   };
 
   return (
-    <div className="posts_container create profile">
-      <h1 style={{ fontWeight: "450" }}>
-        fu/{capitalizeFirstLetter(userDetails.username)}
-      </h1>
-      <p>{userDetails.email}</p>
-      {userId === localStorage.getItem("userID") && (
-        <button onClick={handleDelete}>Delete User</button>
-      )}
-      <h2>User Posts</h2>
-      {userPosts.length > 0 ? (
-        userPosts.map((post) => (
-          <div className="post" key={post.post_id}>
-            <h4 className="categoryInFYP">
-              fr/{getCategoryNameById(post.category_id)}
-            </h4>
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-            <small>{new Date(post.creation_date).toLocaleString()}</small>
+    <>
+      <div style={{ width: "60%", margin: "0 auto" }}>
+        <div className="backbutton">
+          <div onClick={() => navigate("/home")}>
+            <FaArrowLeftLong /> <span>Back</span>{" "}
           </div>
-        ))
-      ) : (
-        <p>No posts made by this user.</p>
-      )}
-    </div>
+        </div>
+      </div>
+
+      <div className="posts_container create profile">
+        <h1 style={{ fontWeight: "450" }}>
+          fu/{capitalizeFirstLetter(userDetails.username)}
+        </h1>
+
+        {userId === localStorage.getItem("userID") && (
+          <>
+            <p>{userDetails.email}</p>
+            <button onClick={handleDelete}>Delete User</button>
+          </>
+        )}
+        <div className="userPostsInProfile">
+          <h2>Posts</h2>
+          {userPosts.length > 0 ? (
+            userPosts.map((post) => (
+              <div className="post" key={post.post_id}>
+                <div className="categoryAndDate">
+                  <h4 className="categoryInFYP">
+                    fr/{getCategoryNameById(post.category_id)}
+                  </h4>
+                  <span>•</span>
+
+                  <small>{new Date(post.creation_date).toLocaleString()}</small>
+                </div>
+
+                <h3 className="title">{post.title}</h3>
+                <p className="content">{post.content}</p>
+                <div className="likes_container">
+                  <FaHeart />{" "}
+                  <span className="like_count">Likes: {post.likes}</span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No posts made by this user.</p>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
 export default Profile;
-
