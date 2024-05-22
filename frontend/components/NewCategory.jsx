@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const NewCategory = () => {
   const api = import.meta.env.VITE_URL;
@@ -7,6 +9,7 @@ const NewCategory = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,6 +32,14 @@ const NewCategory = () => {
   };
 
   return (
+    <>
+    <div style={{ width: "60%", margin: "0 auto" }}>
+        <div className="backbutton">
+          <div onClick={() => navigate("/home")}>
+            <FaArrowLeftLong /> <span>Back</span>{" "}
+          </div>
+        </div>
+      </div>
     <div className='posts_container create'>
       <h1>Create New Category</h1>
       {message && <p>{message}</p>}
@@ -53,6 +64,7 @@ const NewCategory = () => {
         <button type="submit">Create Category</button>
       </form>
     </div>
+    </>
   );
 };
 

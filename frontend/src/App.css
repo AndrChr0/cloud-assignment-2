@@ -8,6 +8,18 @@
   /* outline: 1px solid red;s */
 }
 
+.postedByUser:hover{
+  text-decoration: underline;
+}
+
+.userPostsInProfile{
+  margin-top: 50px;
+
+  && h2{
+    font-weight: 300;
+  }
+}
+
 nav {
   display: flex;
   justify-content: space-between;
