@@ -4,14 +4,13 @@ import axios from "axios";
 import { FaHeart } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-
 const CategoryPage = () => {
   const api = import.meta.env.VITE_URL;
 
   const { category_id } = useParams();
   const [posts, setPosts] = useState([]);
   const [categoryName, setCategoryName] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch posts for the selected category
@@ -47,11 +46,11 @@ const CategoryPage = () => {
   const handleLike = async (postId) => {
     try {
       const userId = Number(localStorage.getItem("userID"));
-      const response = await axios.post(`${api}/posts/${postId}/like`, {
+      await axios.post(`${api}/posts/${postId}/like`, {
         user_id: userId,
       });
 
-      // Update the posts state to reflect the new like count
+      // Update the posts state to reflect the new like count immediately
       setPosts(
         posts.map((post) =>
           post.post_id === postId ? { ...post, likes: post.likes + 1 } : post
@@ -65,7 +64,9 @@ const CategoryPage = () => {
   return (
     <>
       <div className="posts_in_category">
-        <div className="backbutton" > <div onClick={()=>navigate('/home')}><FaArrowLeftLong /> <span>Back</span> </div></div>
+        <div className="backbutton" onClick={() => navigate('/home')}>
+          <FaArrowLeftLong /> <span>Back</span>
+        </div>
         <div className="background"></div>
         <h1 className="name"> <span>fr/{categoryName}</span></h1>
       </div>
@@ -96,7 +97,7 @@ const CategoryPage = () => {
             </div>
           ))
         ) : (
-          <p>Hello, there trendsetter!<br></br> Be the first one to post in fr/{categoryName}.</p>
+          <p>Hello, there trendsetter!<br /> Be the first one to post in fr/{categoryName}.</p>
         )}
       </div>
     </>

@@ -99,11 +99,9 @@ def get_posts_by_category(category_id):
     connection = get_db_connection()
     cursor = connection.cursor()
     query = '''
-        SELECT p.post_id, p.title, p.content, p.user_id, p.category_id, p.creation_date, COALESCE(COUNT(l.like_id), 0) as likes
+        SELECT p.post_id, p.title, p.content, p.user_id, p.category_id, p.creation_date, p.likes
         FROM posts p
-        LEFT JOIN likes l ON p.post_id = l.post_id
         WHERE p.category_id = %s
-        GROUP BY p.post_id
         ORDER BY p.creation_date DESC
     '''
     cursor.execute(query, (category_id,))
