@@ -6,25 +6,27 @@ export default Context;
 
 export const useReddit = () => {
     return useContext(Context);
-    };
-
+};
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userID, setUserID] = useState(null);  // Add this state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-// check if user is logged in
+  // Check if user is logged in
   useEffect(() => {
     const user = localStorage.getItem("user");
+    const id = localStorage.getItem("userID");  // Retrieve userID from localStorage
     if (user) {
       setUser(user);
+      setUserID(id);  // Set userID
       setIsLoggedIn(true);
     }
   }, []);
 
   return (
-    // global variables for user and login status
-    <Context.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn }}>
+    // Global variables for user, userID, and login status
+    <Context.Provider value={{ user, setUser, userID, isLoggedIn, setIsLoggedIn }}>
       {children}
     </Context.Provider>
   );

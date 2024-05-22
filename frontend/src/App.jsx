@@ -24,7 +24,7 @@ function App() {
         <Route path="/category/:category_id" element={<CategoryPage/>} />
         <Route path="/new-post" element={<NewPost />} />
         <Route path="/new-category" element={<NewCategory />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
       </Routes>
       </main>
     </>

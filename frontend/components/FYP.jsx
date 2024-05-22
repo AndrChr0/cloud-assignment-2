@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryList from "./CategoryList";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const FYP = () => {
   const api = import.meta.env.VITE_URL;
 
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [usernames, setUsernames] = useState({});
+
+  const navigate = useNavigate();
 
   // Fetch posts from the API
   const fetchPosts = async () => {
@@ -73,36 +77,64 @@ const FYP = () => {
     return category ? category.name : "Unknown";
   };
 
+
+  const fetchUsername = async (userId) => {
+    if (usernames[userId]) return;
+
+    try {
+      const response = await axios.get(`${api}/users/${userId}`);
+      setUsernames((prevUsernames) => ({
+        ...prevUsernames,
+        [userId]: response.data.username,
+      }));
+    } catch (error) {
+      console.error("Error fetching username:", error);
+    }
+  };
+
+  const handleClickUser = (user) => {
+    navigate(`/profile/${user}`);
+    console.log("click");
+  };
   return (
     <>
       <div className="posts_container">
         <CategoryList />
 
         {posts.length > 0 ? (
-          posts.map((post) => (
-            <div className="post" key={post.post_id}>
-              <div className="categoryAndDate">
-                <h4 className="categoryInFYP">
-                  fr/{getCategoryNameById(post.category_id)}
-                </h4>
-                <span>•</span>
-                <small>{new Date(post.creation_date).toLocaleString()}</small>
-              </div>
+          posts.map((post) => {
+            fetchUsername(post.user_id);
+            return (
+              <div className="post" key={post.post_id}>
+                <div className="categoryAndDate">
+                  <h4 className="categoryInFYP" onClick={()=>navigate(`/category/${post.category_id}`)}>
+                    fr/{getCategoryNameById(post.category_id)}
+                  </h4>
+                  <span>•</span>
+                  Posted by
+                  <span className="postedByUser" onClick={() => handleClickUser(post.user_id)}>
+                    fu/{usernames[post.user_id] || "Loading..."}
+                  </span>
+                  <small>{new Date(post.creation_date).toLocaleString()}</small>
+                </div>
 
-              <h2 className="title">{post.title}</h2>
-              <p className="content">{post.content}</p>
+                <h2 className="title">{post.title}</h2>
 
-              <div className="likes_container">
-                <button
-                  className="like"
-                  onClick={() => handleLike(post.post_id)}
-                >
-                  <FaHeart />{" "}
-                </button>
-                <span className="like_count">Likes: {post.likes}</span>
+                <p className="content">{post.content}</p>
+
+
+                <div className="likes_container">
+                  <button
+                    className="like"
+                    onClick={() => handleLike(post.post_id)}
+                  >
+                    <FaHeart />{" "}
+                  </button>
+                  <span className="like_count">Likes: {post.likes}</span>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p>No posts available.</p>
         )}

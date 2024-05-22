@@ -19,7 +19,7 @@ const Login = () => {
   const adUserToLocalStorage = (username, id) => {
     localStorage.setItem("user", username);
     localStorage.setItem("userID", id);
-  }
+  };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -45,33 +45,45 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login">
+      <h2>Log in</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Username:
+        <div>
           <input
             type="text"
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
           />
-        </label>
-        <label>
-          Password:
+
           <input
             type="password"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
           />
-        </label>
-        <button type="submit">Log in</button>
+          {message && (
+            <p style={{ color: "red", fontSize: "11px", marginTop: "-15px" }}>
+              {message}
+            </p>
+          )}
+          <p style={{ fontSize: "15px" }}>
+            New to Fake Reddit?{" "}
+            <Link
+              style={{ textDecoration: "none", color: "#648EFC" }}
+              to="/register"
+            >
+              Register
+            </Link>
+          </p>
+        </div>
+
+        <div>
+          <button type="submit">Log in</button>
+        </div>
       </form>
-      {message && <p>{message}</p>}
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
     </div>
   );
 };

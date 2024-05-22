@@ -258,6 +258,33 @@ def delete_user(user_id):
 
     return jsonify({'message': 'User deleted successfully'})
 
+@app.route('/users/<int:user_id>/posts', methods=['GET'])  # New route to get posts by a specific user
+def get_posts_by_user(user_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    query = '''
+        SELECT p.post_id, p.title, p.content, p.user_id, p.category_id, p.creation_date, COALESCE(COUNT(l.like_id), 0) as likes
+        FROM posts p
+        LEFT JOIN likes l ON p.post_id = l.post_id
+        WHERE p.user_id = %s
+        GROUP BY p.post_id
+        ORDER BY p.creation_date DESC  # Sorting posts by creation date in descending order
+    '''
+    cursor.execute(query, (user_id,))
+    posts = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return jsonify([{
+        'post_id': post[0],
+        'title': post[1],
+        'content': post[2],
+        'user_id': post[3],
+        'category_id': post[4],
+        'creation_date': post[5],
+        'likes': post[6]
+    } for post in posts])
+
+
 
 if __name__ == '__main__':
     try:
