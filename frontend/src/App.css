@@ -8,6 +8,10 @@
   /* outline: 1px solid red;s */
 }
 
+.postedByUser:hover{
+  text-decoration: underline;
+}
+
 nav {
   display: flex;
   justify-content: space-between;

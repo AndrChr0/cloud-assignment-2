@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useReddit } from "../Context";
 
-// nav bar component
+// Nav bar component
 const Nav = () => {
-  const { isLoggedIn, setIsLoggedIn } = useReddit();
+  const { isLoggedIn, setIsLoggedIn, userID } = useReddit();  // Retrieve userID from context
 
   const logOut = () => {
     setIsLoggedIn(false);
@@ -33,7 +33,7 @@ const Nav = () => {
                 <Link to="/new-post">New Post</Link>
               </li>
               <li>
-                <Link to="/profile">Profile</Link>
+                <Link to={`/profile/${userID}`}>Profile</Link>  {/* Dynamic profile link */}
               </li>
               {isLoggedIn && <li>|</li>}
             </>

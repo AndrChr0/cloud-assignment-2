@@ -84,7 +84,7 @@ const CategoryPage = () => {
             return (
               <div className="post" key={post.post_id}>
                 <div className="categoryAndDate">
-                  <h4 className="categoryInFYP"> Posted by <span onClick={()=>handleClickUser(post.user_id)}>fu/{usernames[post.user_id] || "Loading..."}</span> </h4>
+                  <h4 className="categoryInFYP"> Posted by <span onClick={()=>handleClickUser(post.user_id)} className="postedByUser">fu/{usernames[post.user_id] || "Loading..."}</span> </h4>
                   <span>•</span>
                   <small>{new Date(post.creation_date).toLocaleString()}</small>
                 </div>
