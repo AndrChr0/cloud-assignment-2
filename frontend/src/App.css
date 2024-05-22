@@ -272,6 +272,9 @@ form {
 .categoryInFYP {
   font-weight: 300;
 }
+.categoryInFYP:hover{
+  text-decoration: underline;
+}
 
 .posts_in_category {
   padding-top: 10px;

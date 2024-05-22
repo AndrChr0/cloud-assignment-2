@@ -110,7 +110,7 @@ const Profile = () => {
             userPosts.map((post) => (
               <div className="post" key={post.post_id}>
                 <div className="categoryAndDate">
-                  <h4 className="categoryInFYP">
+                  <h4 className="categoryInFYP" onClick={()=>navigate(`/category/${post.category_id}`)}>
                     fr/{getCategoryNameById(post.category_id)}
                   </h4>
                   <span>•</span>
