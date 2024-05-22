@@ -29,7 +29,7 @@ const NewCategory = () => {
   };
 
   return (
-    <div>
+    <div className='posts_container create'>
       <h1>Create New Category</h1>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
