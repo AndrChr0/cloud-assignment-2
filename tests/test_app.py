@@ -4,7 +4,8 @@ from flask.testing import FlaskClient
 from typing import Generator
 from unittest.mock import MagicMock
 
-from app.app import app, get_db_connection
+from app.app import app
+from app.db_utils import get_db_connection
 
 @pytest.fixture
 def client() -> Generator[FlaskClient, None, None]:
