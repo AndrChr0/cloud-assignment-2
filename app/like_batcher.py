@@ -1,6 +1,7 @@
 import threading
 import time
 from collections import defaultdict
+from typing import DefaultDict
 import mysql.connector
 from db_utils import get_db_connection
 import logging
@@ -8,10 +9,11 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
+
 class LikeBatcher:
     def __init__(self, flush_interval: int = 10, batch_size: int = 10):
         # Initialize the LikeBatcher with specified flush interval and batch size.
-        self.likes = defaultdict(int)  # Dictionary to store likes count for each post
+        self.likes: DefaultDict[int, int] = defaultdict(int)  # Dictionary to store likes count for each post
         self.lock = threading.Lock()  # Lock for thread safety
         self.flush_interval = flush_interval  # Time interval to flush likes
         self.batch_size = batch_size  # Number of likes to accumulate before flushing
