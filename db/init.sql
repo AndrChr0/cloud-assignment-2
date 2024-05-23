@@ -12,7 +12,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`name`, `description`, `creation_date`) VALUES
 ('CoryInTheHouse', 'For all the mean boiiis', '2024-05-05 00:00:00'),
-('BissePump', 'Learn the way', '2024-05-05 00:00:00'),
+('Stylter', 'For oss tre-bente', '2024-05-05 00:00:00'),
 ('DankMemes', 'Dank memes', '2024-05-05 00:00:00'),
 ('Programming', 'For all the programmers', '2024-05-05 00:00:00'),
 ('Gaming', 'For all the gamers', '2024-05-05 00:00:00');
@@ -29,7 +29,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`username`, `email`, `password`) VALUES
 ('andreas', 'andreas@example.com', 'andreas'),
-('Paul_Teach', 'paul@er.kul', 'pauul<3'),
+('Paul_Knutson', 'paul@er.kul', 'pauul<3'),
 ('dev', 'dev@dev.com', 'dev'),
 ('ola', 'olansk@olansk.com', 'olansk'),
 ('Christopher_Ngo', 'chrngo@example.com', 'ngoooo');
@@ -51,11 +51,11 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`title`, `content`, `user_id`, `category_id`, `creation_date`) VALUES
 ('I am a mean boi', 'I am a mean boi', 1, 1, '2024-05-05 10:00:00'),
-('Learn the Way', 'The only way to pump is the BissePump way!', 2, 2, '2024-05-06 12:00:00'),
+('Er dere kjent med Karbonfiber', 'Har mekka karbonfiberstyler, fett', 2, 2, '2024-05-06 12:00:00'),
 ('Top Dank Memes', 'Check out these top dank memes of the week.', 3, 3, '2024-05-06 13:00:00'),
 ('Programming Tips', 'Best practices for writing programmer code like a probro', 4, 4, '2024-05-07 14:00:00'),
 ('Gaming Highlights', 'Top highlights from this week in gaming...', 5, 5, '2024-05-07 15:00:00'),
-('BissePump 101', 'Introduction to BissePump training.', 2, 2, '2024-05-08 16:00:00'),
+('Triks', 'Hvordan ta 360 swtch grab med stylter, faller stadig paa fisen. Har noen tips?', 2, 2, '2024-05-08 16:00:00'),
 ('Meme Review', 'Reviewing the latest dank memes.', 3, 3, '2024-05-08 17:00:00'),
 ('Code Review', 'How to do a proper code, <whaat?>', 4, 4, '2024-05-08 18:00:00'),
 ('Crazy game', 'Have you played that one game??', 5, 5, '2024-05-09 19:00:00');
