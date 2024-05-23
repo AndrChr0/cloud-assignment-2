@@ -379,3 +379,18 @@ form {
     }
   }
 }
+
+
+
+
+/* media queries */
+
+@media (max-width: 768px) {
+
+  .login {
+    width: 90vw;
+    && form input {
+      width: 60vw;
+    }
+  }
+}

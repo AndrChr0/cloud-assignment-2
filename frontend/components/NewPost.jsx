@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
+
 const NewPost = () => {
   const api = import.meta.env.VITE_URL;
 
@@ -42,6 +43,7 @@ const NewPost = () => {
       setTitle("");
       setContent("");
       setCategory("");
+      navigate("/home");
     } catch (error) {
       setMessage("Error creating post");
       console.error("Error creating post:", error);

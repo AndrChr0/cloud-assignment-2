@@ -3,7 +3,10 @@ import { useReddit } from "../Context";
 
 // Nav bar component
 const Nav = () => {
-  const { isLoggedIn, setIsLoggedIn, userID } = useReddit();  // Retrieve userID from context
+  const { isLoggedIn, setIsLoggedIn } = useReddit();  // Retrieve userID from context
+
+
+  const id = localStorage.getItem("userID");
 
   const logOut = () => {
     setIsLoggedIn(false);
@@ -33,7 +36,7 @@ const Nav = () => {
                 <Link to="/new-post">New Post</Link>
               </li>
               <li>
-                <Link to={`/profile/${userID}`}>Profile</Link>  {/* Dynamic profile link */}
+                <Link to={`/profile/${id}`}>Profile</Link>  {/* Dynamic profile link */}
               </li>
               {isLoggedIn && <li>|</li>}
             </>

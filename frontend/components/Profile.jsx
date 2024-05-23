@@ -61,6 +61,7 @@ const Profile = () => {
         localStorage.removeItem("userID");
         setUserDetails(null);
         setIsLoggedIn(false);
+        localStorage.removeItem("user");
         setUser(null);
         navigate("/");
       })
