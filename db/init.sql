@@ -51,7 +51,7 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`title`, `content`, `user_id`, `category_id`, `creation_date`) VALUES
 ('I am a mean boi', 'I am a mean boi', 1, 1, '2024-05-05 10:00:00'),
-('Er dere kjent med Karbonfiber', 'Har mekka karbonfiberstyler, fett', 2, 2, '2024-05-06 12:00:00'),
+('Er dere kjent med Karbonfiber', 'Har mekka karbonfiberstylter, fett', 2, 2, '2024-05-06 12:00:00'),
 ('Top Dank Memes', 'Check out these top dank memes of the week.', 3, 3, '2024-05-06 13:00:00'),
 ('Programming Tips', 'Best practices for writing programmer code like a probro', 4, 4, '2024-05-07 14:00:00'),
 ('Gaming Highlights', 'Top highlights from this week in gaming...', 5, 5, '2024-05-07 15:00:00'),

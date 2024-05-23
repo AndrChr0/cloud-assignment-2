@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useReddit } from "../Context";
+import { useNavigate } from "react-router-dom";
 
 // Nav bar component
 const Nav = () => {
   const { isLoggedIn, setIsLoggedIn } = useReddit();  // Retrieve userID from context
-
+  const navigate = useNavigate();
 
   const id = localStorage.getItem("userID");
 
@@ -12,6 +13,7 @@ const Nav = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");
     localStorage.removeItem("userID");
+    navigate("/");
   };
 
   return (

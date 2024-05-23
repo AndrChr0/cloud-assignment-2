@@ -15,14 +15,6 @@ export const ContextProvider = ({ children }) => {
 
   // Check if user is logged in
   useEffect(() => {
-
-    if(!isLoggedIn){
-      localStorage.removeItem("user");
-      localStorage.removeItem("userID");
-      return
-    }
-
-
     const user = localStorage.getItem("user");
     const id = localStorage.getItem("userID");  // Retrieve userID from localStorage
     if (user) {
