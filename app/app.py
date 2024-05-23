@@ -211,7 +211,7 @@ def create_category():
 @app.route('/posts/<int:post_id>/like', methods=['POST'])
 def like_post(post_id):
     data = request.json
-    user_id = data.get('user_id')
+    data.get('user_id')
 
     like_batcher.add_like(post_id)
     return jsonify({'message': 'Like received'})
@@ -258,6 +258,7 @@ def delete_user(user_id):
 
     return jsonify({'message': 'User deleted successfully'})
 
+
 @app.route('/users/<int:user_id>/posts', methods=['GET'])  # New route to get posts by a specific user
 def get_posts_by_user(user_id):
     connection = get_db_connection()
@@ -283,7 +284,6 @@ def get_posts_by_user(user_id):
         'creation_date': post[5],
         'likes': post[6]
     } for post in posts])
-
 
 
 if __name__ == '__main__':
