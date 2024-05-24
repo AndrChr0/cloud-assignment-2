@@ -31,7 +31,6 @@ const Profile = () => {
       axios
         .get(`${api}/users/${userId}/posts`)
         .then((response) => {
-          console.log("Posts response:", response.data);
           setUserPosts(response.data);
         })
         .catch((error) => {
@@ -59,7 +58,6 @@ const Profile = () => {
     axios
       .delete(`${api}/users/${userId}`)
       .then((response) => {
-        console.log(response.data.message);
         localStorage.removeItem("userID");
         setUserDetails(null);
         setIsLoggedIn(false);
