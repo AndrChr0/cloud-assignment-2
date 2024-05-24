@@ -121,10 +121,6 @@ const Profile = () => {
 
                 <h3 className="title">{post.title}</h3>
                 <p className="content">{post.content}</p>
-                <div className="likes_container">
-                  <FaHeart />{" "}
-                  <span className="like_count">Likes: {post.likes}</span>
-                </div>
               </div>
             ))
           ) : (
