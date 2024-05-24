@@ -24,6 +24,7 @@ const NewCategory = () => {
       // Reset the name and description states
       setName('');
       setDescription('');
+      navigate('/home');
     } catch (error) {
       // Handle errors by setting an error message
       setMessage('Error creating category');
