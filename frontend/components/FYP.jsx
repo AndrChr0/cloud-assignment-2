@@ -17,7 +17,6 @@ const FYP = () => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get(`${api}/posts`);
-      console.log("Fetched posts: ", response.data); // Log fetched posts
       // Initialize likes to 0 if undefined
       const postsData = response.data.map((post) => ({
         ...post,
@@ -36,7 +35,6 @@ const FYP = () => {
       try {
         const response = await axios.get(`${api}/categories`);
         setCategories(response.data);
-        console.log("Fetched categories: ", response.data); // Log fetched categories
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -62,7 +60,6 @@ const FYP = () => {
         user_id: userId,
       });
 
-      console.log(`Liked post with ID: ${postId}`); // Log liked post ID
 
       // Fetch posts again to get the updated likes from the server
       fetchPosts();
@@ -94,7 +91,6 @@ const FYP = () => {
 
   const handleClickUser = (user) => {
     navigate(`/profile/${user}`);
-    console.log("click");
   };
   return (
     <>
