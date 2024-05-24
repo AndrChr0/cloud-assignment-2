@@ -16,6 +16,7 @@ const Profile = () => {
   const { setIsLoggedIn, setUser } = useReddit();
 
   useEffect(() => {
+    // Fetch user details
     if (userId) {
       axios
         .get(`${api}/users/${userId}`)
@@ -54,6 +55,7 @@ const Profile = () => {
       return;
     }
 
+    // Send a DELETE request to the API to delete the user
     axios
       .delete(`${api}/users/${userId}`)
       .then((response) => {
@@ -79,6 +81,8 @@ const Profile = () => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+
+  // Function to get the category name by its ID
   const getCategoryNameById = (id) => {
     const category = categories.find((category) => category.category_id === id);
     return category ? category.name : "Unknown";

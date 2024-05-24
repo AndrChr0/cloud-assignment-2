@@ -51,11 +51,7 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {/* {message && (
-            <p style={{ color: "red", fontSize: "11px", marginTop: "-15px" }}>
-              {message}
-            </p>
-          )} */}
+        
           <p style={{ fontSize: "15px" }}>
             Already a Fake Redditor?{" "}
             <Link

@@ -9,6 +9,7 @@ const Nav = () => {
 
   const id = localStorage.getItem("userID");
 
+  // Function to log out
   const logOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");

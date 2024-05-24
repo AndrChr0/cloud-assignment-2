@@ -43,7 +43,6 @@ const CategoryList = () => {
             fr/{category.name}
           </li>
         ))}
-         {/* <li className="create" onClick={()=>navigate('/new-category')}><GoPlus /> Create new category</li> */}
       </ul>
     </div>
   );

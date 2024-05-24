@@ -14,6 +14,7 @@ const CategoryPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // get posts in the category
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${api}/categories/${category_id}/posts`);
@@ -23,6 +24,7 @@ const CategoryPage = () => {
       }
     };
 
+    // get category name
     const fetchCategoryName = async () => {
       try {
         const response = await axios.get(`${api}/categories`);
@@ -37,6 +39,7 @@ const CategoryPage = () => {
     fetchCategoryName();
   }, [category_id]);
 
+  // Fetch the username of the user who made the post
   const fetchUsername = async (userId) => {
     if (usernames[userId]) return;
 
@@ -48,6 +51,7 @@ const CategoryPage = () => {
     }
   };
 
+  // Handle liking a post
   const handleLike = async (postId) => {
     try {
       const userId = Number(localStorage.getItem("userID"));
