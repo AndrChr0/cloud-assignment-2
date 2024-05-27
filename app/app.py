@@ -259,7 +259,8 @@ def delete_user(user_id):
     return jsonify({'message': 'User deleted successfully'})
 
 
-@app.route('/users/<int:user_id>/posts', methods=['GET'])  # New route to get posts by a specific user
+# get posts by a specific user
+@app.route('/users/<int:user_id>/posts', methods=['GET'])  
 def get_posts_by_user(user_id):
     connection = get_db_connection()
     cursor = connection.cursor()
